@@ -2,7 +2,7 @@
 // eslint-disable-next-line no-undef
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss', '@vueuse/nuxt', '@nuxtjs/eslint-module'],
+  modules: ['@nuxtjs/tailwindcss', '@vueuse/nuxt'],
   // eslint: {
   //   // Enable Prettier integration
   //   formatter: 'prettier'

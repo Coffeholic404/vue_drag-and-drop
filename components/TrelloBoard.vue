@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import type { Column } from '../types'
+import type { Column, Task } from '../types'
 import draggableComponent from 'vuedraggable'
 import { nanoid } from 'nanoid'
 const columns = ref<Column[]>([
@@ -11,40 +11,40 @@ const columns = ref<Column[]>([
       {
         id: nanoid(),
         title: 'Create marketing landing page',
-        createdAt: new Date(),
+        createdAt: new Date()
       },
       {
         id: nanoid(),
         title: 'Develop cool new feature',
-        createdAt: new Date(),
+        createdAt: new Date()
       },
       {
         id: nanoid(),
         title: 'Fix page nav bug',
-        createdAt: new Date(),
-      },
-    ],
+        createdAt: new Date()
+      }
+    ]
   },
   {
     id: nanoid(),
     title: 'Selected for Dev',
-    tasks: [],
+    tasks: []
   },
   {
     id: nanoid(),
     title: 'In Progress',
-    tasks: [],
+    tasks: []
   },
   {
     id: nanoid(),
     title: 'QA',
-    tasks: [],
+    tasks: []
   },
   {
     id: nanoid(),
     title: 'Complete',
-    tasks: [],
-  },
+    tasks: []
+  }
 ])
 </script>
 <template>
@@ -64,18 +64,18 @@ const columns = ref<Column[]>([
             {{ column.title }}
           </header>
           <draggableComponent
-            v-model="columns"
-            group="columns"
-            :animation="150"
+            v-model="column.tasks"
             handle=".drag-handle"
+            group="tasks"
+            :animation="150"
             item-key="id"
-            class="flex gap-4 overflow-x-auto items-start"
-          ></draggableComponent>
-          <TrelloBoardTask
-            v-for="task in column.tasks"
-            :task="task"
-            :key="task.id"
-          />
+          >
+            <template #item="{ element: task }: { element: Task }">
+              <TrelloBoardTask
+                :task="task"
+              />
+            </template>
+          </draggableComponent>
           <footer>
             <button class="text-gray-500">+ Add a Card</button>
           </footer>
