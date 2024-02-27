@@ -47,7 +47,7 @@ const columns = ref<Column[]>([
 ]);
 </script>
 <template>
-    <div>
+    <div class=" flex">
         <div v-for="column in columns" :key="column.id">
         <header>
             {{ column.title }}
