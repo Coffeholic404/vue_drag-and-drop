@@ -73,13 +73,13 @@ const alt = useKeyModifier('Alt')
             item-key="id"
           >
             <template #item="{ element: task }: { element: Task }">
-              <TrelloBoardTask :task="task" />
+              <div>
+                <TrelloBoardTask :task="task" />
+              </div>
             </template>
           </draggableComponent>
           <footer>
-            <button class="text-gray-500">
-              + Add a Card
-            </button>
+            <button class="text-gray-500">+ Add a Card</button>
           </footer>
         </div>
       </template>
