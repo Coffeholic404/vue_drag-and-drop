@@ -1,51 +1,69 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import draggableComponent from 'vuedraggable'
 import { nanoid } from 'nanoid'
 import type { Column, Task } from '../types'
-const columns = ref<Column[]>([
+
+// eslint-disable-next-line no-undef
+const columns = useLocalStorage<Column[]>(
+  'trelloBoard',
+  [
+    {
+      id: nanoid(),
+      title: 'Backlog',
+      tasks: [
+        {
+          id: nanoid(),
+          title: 'Create marketing landing page',
+          createdAt: new Date()
+        },
+        {
+          id: nanoid(),
+          title: 'Develop cool new feature',
+          createdAt: new Date()
+        },
+        {
+          id: nanoid(),
+          title: 'Fix page nav bug',
+          createdAt: new Date()
+        }
+      ]
+    },
+    {
+      id: nanoid(),
+      title: 'Selected for Dev',
+      tasks: []
+    },
+    {
+      id: nanoid(),
+      title: 'In Progress',
+      tasks: []
+    },
+    {
+      id: nanoid(),
+      title: 'QA',
+      tasks: []
+    },
+    {
+      id: nanoid(),
+      title: 'Complete',
+      tasks: []
+    }
+  ],
   {
-    id: nanoid(),
-    title: 'Backlog',
-    tasks: [
-      {
-        id: nanoid(),
-        title: 'Create marketing landing page',
-        createdAt: new Date()
+    serializer: {
+      read: (value) => {
+        return JSON.parse(value).map((column: Column) => {
+          column.tasks = column.tasks.map((task: Task) => {
+            task.createdAt = new Date(task.createdAt)
+            return task
+          })
+          return column
+        })
       },
-      {
-        id: nanoid(),
-        title: 'Develop cool new feature',
-        createdAt: new Date()
-      },
-      {
-        id: nanoid(),
-        title: 'Fix page nav bug',
-        createdAt: new Date()
-      }
-    ]
-  },
-  {
-    id: nanoid(),
-    title: 'Selected for Dev',
-    tasks: []
-  },
-  {
-    id: nanoid(),
-    title: 'In Progress',
-    tasks: []
-  },
-  {
-    id: nanoid(),
-    title: 'QA',
-    tasks: []
-  },
-  {
-    id: nanoid(),
-    title: 'Complete',
-    tasks: []
+      write: value => JSON.stringify(value)
+    }
   }
-])
+)
 // eslint-disable-next-line no-undef
 const alt = useKeyModifier('Alt')
 
@@ -85,7 +103,11 @@ const createColumn = () => {
               class="title-input bg-transparent focus:bg-white rounded px-1 w-4/5"
               type="text"
               @keyup.enter="($event.target as HTMLAnchorElement).blur()"
-              @keydown.backspace="column.title === '' ? (columns = columns.filter(c => c.id !== column.id)) : null"
+              @keydown.backspace="
+                column.title === ''
+                  ? (columns = columns.filter((c) => c.id !== column.id))
+                  : null
+              "
             >
           </header>
           <draggableComponent
