@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import type { Column, Task } from '../types'
 import draggableComponent from 'vuedraggable'
 import { nanoid } from 'nanoid'
+import type { Column, Task } from '../types'
 const columns = ref<Column[]>([
   {
     id: nanoid(),
@@ -46,6 +46,8 @@ const columns = ref<Column[]>([
     tasks: []
   }
 ])
+// eslint-disable-next-line no-undef
+const alt = useKeyModifier('Alt')
 </script>
 <template>
   <div>
@@ -66,18 +68,18 @@ const columns = ref<Column[]>([
           <draggableComponent
             v-model="column.tasks"
             handle=".drag-handle"
-            group="tasks"
+            :group="{ name: 'tasks', pull: alt ? 'clone' : true }"
             :animation="150"
             item-key="id"
           >
             <template #item="{ element: task }: { element: Task }">
-              <TrelloBoardTask
-                :task="task"
-              />
+              <TrelloBoardTask :task="task" />
             </template>
           </draggableComponent>
           <footer>
-            <button class="text-gray-500">+ Add a Card</button>
+            <button class="text-gray-500">
+              + Add a Card
+            </button>
           </footer>
         </div>
       </template>

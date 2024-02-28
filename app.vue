@@ -6,7 +6,7 @@
         alt="Vue School"
         width="200"
         class="mr-3"
-      />
+      >
       Trello Board
     </h1>
     <TrelloBoard />
