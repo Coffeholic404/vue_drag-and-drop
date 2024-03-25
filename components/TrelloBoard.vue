@@ -85,7 +85,7 @@ const createColumn = () => {
 }
 </script>
 <template>
-  <div class="flex items-start overflow-x-auto gap-4">
+  <div class="flex items-start gap-4 ">
     <draggableComponent
       v-model="columns"
       group="columns"
@@ -95,8 +95,8 @@ const createColumn = () => {
       class="flex gap-4 items-start"
     >
       <template #item="{ element: column }: { element: Column }">
-        <div class="column bg-gray-200 p-5 rounded min-w-[250px]">
-          <header class="font-bold mb-4">
+        <div class="column bg-neutral-800 p-5 rounded min-w-[250px]">
+          <header class="font-bold  text-purple-700 mb-4">
             <DragHandle />
             <input
               v-model="column.title"
